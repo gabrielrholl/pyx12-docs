@@ -1,7 +1,7 @@
 API
 ===
 
-.. automodule:: paramiko.sftp
+.. automodule:: pyx12.x12context
 
 
 .. autosummary::
