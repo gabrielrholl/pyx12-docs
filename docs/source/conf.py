@@ -25,7 +25,6 @@ extensions = [
     'sphinx.ext.autosummary',
     'sphinx.ext.intersphinx',
     'sphinx_rtd_theme',
-    'pyx12',
 ]
 
 # Autodoc settings
