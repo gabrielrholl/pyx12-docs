@@ -10,7 +10,10 @@ import pyx12
 # -- Project information
 
 project = 'Pyx12'
-copyright = '2022, Gabriel Rholl'
+#copyright = '2022, Gabriel Rholl'
+copyright = '2022, Documentation by Gabriel Rholl. ' + \
+            'Pyx12 is written and maintained by John Holland, with ' + \
+            'all rights reserved. (https://github.com/azoner/pyx12)'
 author = 'Gabriel Rholl'
 
 release = '0.1'

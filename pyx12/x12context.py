@@ -8,14 +8,11 @@
 #
 ######################################################################
 """
-Parse a ANSI X12 data file.
-
-Maintain context state
-Start saving context and segments
-Interface to read and alter segments
-
-@todo: Attach errors to returned dicts
+Enables parsing of an ANSI X12 data file, while maintaining context state.
+Enables the saving of context and segments, and provides an interface to 
+read and alter segments.
 """
+# @todo: Attach errors to returned dicts
 #G{classtree X12DataNode}
 
 #import os
@@ -746,11 +743,17 @@ class X12SegmentDataNode(X12DataNode):
 
 
 class X12ContextReader(object):
-    """
-    Read an X12 input stream
-    Keep context when needed
-    """
+    """    
+    Provides a reader entrypoint into pyx12. Uses X12Reader to parse data at a low level, and offers 
+    iter_segments as a way of providing context into the data extracted from the file.
 
+    :param param: Importable settings to configure pyx12
+    :type param: pyx12.params.ParamsBase
+    :param errh: An error handler object.
+    :type errh: pyx12.error_handler.errh_null
+    :param src_file_obj: A python file object. Pyx12 will read all file lines and convert to objects.
+    :type src_file_obj: io.StringIO
+    """
     def __init__(self, param, errh, src_file_obj, xslt_files=None, map_path=None):
         """
         @param param: pyx12.param instance
@@ -779,10 +782,11 @@ class X12ContextReader(object):
 
     #{ Public Methods
     def iter_segments(self, loop_id=None):
-        """
-        Simple segment or tree iterator
-        @return: X12 Data Node - simple segment or tree
-        @rtype: L{node<x12context.X12DataNode>}
+        """    
+        Simple segment or tree iterator 
+
+        :return: X12 Data Node - simple segment or tree
+        :rtype: [ pyx12.x12context.X12DataNode ]
         """
         cur_tree = None
         cur_data_node = None

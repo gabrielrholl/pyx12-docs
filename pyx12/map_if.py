@@ -28,8 +28,14 @@ MAXINT = 2147483647
 
 
 class x12_node(object):
-    """
-    X12 Node Superclass
+    """    
+    X12 Node Superclass. All attributes are initialized to false/null values. 
+
+    :ivar id: (String) - Initial value: None
+    :ivar name: (String) - Initial value: None
+    :ivar parent: () - Initial value: None
+    :ivar children: () - Initial value: []
+    :ivar path: (String) - Initial value: ''
     """
     def __init__(self):
         self.id = None
