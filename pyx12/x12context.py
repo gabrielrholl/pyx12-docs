@@ -42,6 +42,7 @@ class X12DataNode(object):
     """
     def __init__(self, x12_node, seg_data, ntype='seg'):
         """
+        Test INIT method
         """
         self.x12_map_node = x12_node
         self.type = ntype
