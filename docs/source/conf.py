@@ -4,6 +4,8 @@ import os
 import sys
 sys.path.insert(0, os.path.abspath('../..'))
 
+import sphinx_rtd_theme
+
 # -- Project information
 
 project = 'Pyx12'
@@ -21,6 +23,7 @@ extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.autosummary',
     'sphinx.ext.intersphinx',
+    'sphinx_rtd_theme',
 ]
 
 # Autodoc settings
@@ -38,7 +41,8 @@ intersphinx_disabled_domains = ['std']
 templates_path = ['_templates']
 
 # -- Options for HTML output
-html_theme = "sphinx_book_theme"
+html_theme = "sphinx_rtd_theme"
+html_theme_path = ["sphinx_rtd_theme", ]
 
 # -- Options for EPUB output
 epub_show_urls = 'footnote'
