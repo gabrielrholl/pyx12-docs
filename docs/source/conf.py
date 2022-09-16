@@ -5,6 +5,7 @@ import sys
 sys.path.insert(0, os.path.abspath('../..'))
 
 import sphinx_rtd_theme
+import pyx12
 
 # -- Project information
 
@@ -24,6 +25,7 @@ extensions = [
     'sphinx.ext.autosummary',
     'sphinx.ext.intersphinx',
     'sphinx_rtd_theme',
+    'pyx12',
 ]
 
 # Autodoc settings
