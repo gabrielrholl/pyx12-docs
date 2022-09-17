@@ -28,14 +28,26 @@ X12 Segment Data Node
 =====================
 .. autoclass:: pyx12.x12context.X12SegmentDataNode
 
-X12 Node
-========
+X12 Map Node
+============
 .. autoclass:: pyx12.map_if.x12_node
 
-X12 Loop
-========
+X12 Map Loop
+============
 .. autoclass:: pyx12.map_if.loop_if
+
+X12 Map Segment
+===============
+.. autoclass:: pyx12.map_if.segment_if
 
 X12 Segment
 ===========
-.. autoclass:: pyx12.map_if.segment_if
+.. autoclass:: pyx12.segment.Segment
+
+X12 Composite
+=============
+.. autoclass:: pyx12.segment.Composite
+
+X12 Element
+===========
+.. autoclass:: pyx12.segment.Element
