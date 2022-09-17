@@ -78,7 +78,13 @@ class x12_node(object):
         return self.name
 
     def getnodebypath(self, path):
-        """
+        """    
+        Iterates and finds a node by path
+
+        :param path: Remaining path to match
+        :type path: str
+        :return: Matching node, or None if no match
+        :rtype: pyx12.map_if.x12_node
         """
         pathl = path.split('/')
         if len(pathl) == 0:
@@ -98,8 +104,11 @@ class x12_node(object):
         return len(self.children)
 
     def get_child_node_by_idx(self, idx):
-        """
-        @param idx: zero based
+        """    
+        Selects a child node by an index of the child node
+
+        :param idx: Index of node
+        :type idx: int
         """
         if idx >= len(self.children):
             return None
@@ -107,17 +116,18 @@ class x12_node(object):
             return self.children[idx]
 
     def get_child_node_by_ordinal(self, ordinal):
-        """
-        Get a child element or composite by the X12 ordinal
-        @param ord: one based element/composite index.  Corresponds to the map <seq> element
-        @type ord: int
+        """    
+        Get a child element or composite by the X12 ordinal.
+
+        :param ord: One-based element/composite index.  Corresponds to the map <seq> element
+        :type ord: int
         """
         return self.get_child_node_by_idx(ordinal - 1)
 
     def get_path(self):
-        """
-        @return: path - XPath style
-        @rtype: string
+        """    
+        :return: Path - XPath style
+        :rtype: str
         """
         if self._fullpath:
             return self._fullpath
@@ -130,9 +140,9 @@ class x12_node(object):
             return self._fullpath
 
     def _get_x12_path(self):
-        """
-        @return: X12 node path
-        @rtype: L{path<path.X12Path>}
+        """    
+        :return: X12 node path
+        :rtype: pyx12.path.X12Path
         """
         if self._x12path:
             return self._x12path
@@ -143,38 +153,44 @@ class x12_node(object):
     x12path = property(_get_x12_path, None, None)
 
     def is_first_seg_in_loop(self):
-        """
-        @rtype: boolean
+        """    
+        :return: Always false
+        :rtype: bool
         """
         return False
 
     def is_map_root(self):
-        """
-        @rtype: boolean
+        """    
+        :return: Always false
+        :rtype: bool
         """
         return False
 
     def is_loop(self):
-        """
-        @rtype: boolean
+        """    
+        :return: Always false
+        :rtype: bool
         """
         return False
 
     def is_segment(self):
-        """
-        @rtype: boolean
+        """    
+        :return: Always false
+        :rtype: bool
         """
         return False
 
     def is_element(self):
-        """
-        @rtype: boolean
+        """    
+        :return: Always false
+        :rtype: bool
         """
         return False
 
     def is_composite(self):
-        """
-        @rtype: boolean
+        """    
+        :return: Always false
+        :rtype: bool
         """
         return False
 
@@ -502,10 +518,13 @@ class loop_if(x12_node):
                 yield child
 
     def getnodebypath(self, spath):
-        """
-        @param spath: remaining path to match
-        @type spath: string
-        @return: matching node, or None is no match
+        """    
+        Iterates and finds a node by path
+
+        :param spath: Remaining path to match
+        :type spath: str
+        :return: Matching node, or None if no match
+        :rtype: pyx12.map_if.x12_node
         """
         pathl = spath.split('/')
         if len(pathl) == 0:
@@ -533,12 +552,13 @@ class loop_if(x12_node):
         raise EngineError('getnodebypath failed. Path "%s" not found' % spath)
 
     def getnodebypath2(self, path_str):
-        """
-        Try x12 path
+        """    
+        Iterates and finds a node by path by trying them
 
-        @param path_str: remaining path to match
-        @type path_str: string
-        @return: matching node, or None is no match
+        :param path_str: Remaining path to match
+        :type path_str: str
+        :return: Matching node, or None if no match
+        :rtype: pyx12.map_if.x12_node
         """
         x12path = path.X12Path(path_str)
         if x12path.empty():
@@ -570,15 +590,20 @@ class loop_if(x12_node):
         return self.__len__()
 
     def get_child_node_by_idx(self, idx):
-        """
-        @param idx: zero based
+        """    
+        Always raises an error if used. Loops don't have child nodes. 
+
+        :param idx: Index of node
+        :type idx: int
         """
         raise EngineError('loop_if.get_child_node_by_idx is not a valid call for a loop_if')
 
     def get_seg_count(self):
-        """
-        @return: Number of child segments
-        @rtype: integer
+        """    
+        Returns the number of segments that are children of this node.
+
+        :return: Number of child segments
+        :rtype: int
         """
         i = 0
         for ord1 in sorted(self.pos_map):
@@ -588,16 +613,18 @@ class loop_if(x12_node):
         return i
 
     def is_loop(self):
-        """
-        @rtype: boolean
+        """    
+        :return: Always true. Instances of this object are always loops.
+        :rtype: bool
         """
         return True
 
     def is_match(self, seg_data):
-        """
-        @type seg_data: L{segment<segment.Segment>}
-        @return: Is the segment a match to this loop?
-        @rtype: boolean
+        """    
+        :param seg_data: Segment to compare with the first segment in loop.
+        :type seg_data: pyx12.segment.Segment
+        :return: Is the segment a match to this loop?
+        :rtype: bool
         """
         pos_keys = sorted(self.pos_map)
         child = self.pos_map[pos_keys[0]][0]
@@ -630,9 +657,9 @@ class loop_if(x12_node):
         return None
 
     def get_cur_count(self):
-        """
-        @return: current count
-        @rtype: int
+        """    
+        :return: Current count
+        :rtype: int
         """
         raise DeprecationWarning('Moved to nodeCounter')
         return self._cur_count
@@ -663,11 +690,12 @@ class loop_if(x12_node):
         self._cur_count = ct
 
     def get_counts_list(self, ct_list):
-        """
-        Build a list of (path, ct) of the current node and parents
-        Gets the node counts to apply to another map
-        @param ct_list: List to append to
-        @type ct_list: list[(string, int)]
+        """    
+        Build a list of (path, ct) of the current node and parents.
+        Gets the node counts to apply to another map.
+
+        :param ct_list: List to append to
+        :type ct_list: list[(string, int)]
         """
         raise DeprecationWarning('Moved to nodeCounter')
         my_ct = (self.get_path(), self._cur_count)
@@ -765,8 +793,9 @@ class segment_if(x12_node):
         return out
 
     def get_child_node_by_idx(self, idx):
-        """
-        @param idx: zero based
+        """    
+        :param idx: Zero-based index of node
+        :type idx: int
         """
         if idx >= len(self.children):
             return None
@@ -778,20 +807,22 @@ class segment_if(x12_node):
                 raise EngineError('idx %i not found in %s' % (idx, self.id))
 
     def get_child_node_by_ordinal(self, ord):
-        """
-        Get a child element or composite by the X12 ordinal
-        @param ord: one based element/composite index.  Corresponds to the map <seq> element
-        @type ord: int
+        """    
+        Get a child element or composite by the X12 ordinal.
+
+        :param ord: One-based element/composite index.  Corresponds to the map <seq> element
+        :type ord: int
         """
         return self.get_child_node_by_idx(ord - 1)
 
     def getnodebypath2(self, path_str):
-        """
-        Try x12 path
+        """    
+        Iterates and finds a node by path by trying them
 
-        @param path_str: remaining path to match
-        @type path_str: string
-        @return: matching node, or None is no match
+        :param path_str: Remaining path to match
+        :type path_str: str
+        :return: Matching node, or None if no match
+        :rtype: pyx12.map_if.x12_node
         """
         x12path = path.X12Path(path_str)
         if x12path.empty():
@@ -810,15 +841,16 @@ class segment_if(x12_node):
         return int(self.max_use)
 
     def get_parent(self):
-        """
-        @return: ref to parent class instance
-        @rtype: pyx12.x12_node
+        """    
+        :return: Ref to parent class instance
+        :rtype: pyx12.map_if.x12_node
         """
         return self.parent
 
     def is_first_seg_in_loop(self):
-        """
-        @rtype: boolean
+        """    
+        :return: Returns true if this instance's parent is the first seg
+        :rtype: bool
         """
         if self is self.get_parent().get_first_seg():
             return True
@@ -826,11 +858,11 @@ class segment_if(x12_node):
             return False
 
     def is_match(self, seg):
-        """
-        Is data segment given a match to this segment node?
-        @param seg: data segment instance
-        @return: boolean
-        @rtype: boolean
+        """    
+        :param seg_data: Segment to compare with the first segment in loop.
+        :type seg_data: pyx12.segment.Segment
+        :return: Is the segment a match to this segment?
+        :rtype: bool
         """
         if seg.get_seg_id() == self.id:
             if self.children[0].is_element() \
@@ -873,12 +905,15 @@ class segment_if(x12_node):
     def is_match_qual(self, seg_data, seg_id, qual_code):
         """
         Is segment id and qualifier a match to this segment node and to this particular segment data?
-        @param seg_data: data segment instance
-        @type seg_data: L{segment<segment.Segment>}
-        @param seg_id: data segment ID
-        @param qual_code: an ID qualifier code
-        @return: (True if a match, qual_code, element_index, subelement_index)
-        @rtype: tuple(boolean, string, int, int)
+
+        :param seg_data: Data segment instance
+        :type seg_data: pyx12.segment.Segment
+        :param seg_id: Data segment ID
+        :type seg_id: str
+        :param qual_code: An ID qualifier code
+        :type qual_code: str
+        :return: (True if a match, qual_code, element_index, subelement_index)
+        :rtype: tuple(bool, str, int, int)
         """
         if seg_id == self.id:
             if qual_code is None:
@@ -955,17 +990,20 @@ class segment_if(x12_node):
         return None
 
     def is_segment(self):
-        """
-        @rtype: boolean
+        """    
+        :return: Always true. Instances of this object are always segments.
+        :rtype: bool
         """
         return True
 
     def is_valid(self, seg_data, errh):
-        """
-        @param seg_data: data segment instance
-        @type seg_data: L{segment<segment.Segment>}
-        @param errh: instance of error_handler
-        @rtype: boolean
+        """    
+        :param seg_data: Data segment instance
+        :type seg_data: pyx12.segment.Segment
+        :param errh: Instance of error_handler
+        :type errh: pyx12.error_handler.errh_null
+        :return: Is the segment valid given the existing map?
+        :rtype: bool
         """
         valid = True
         child_count = self.get_child_count()
@@ -1043,9 +1081,9 @@ class segment_if(x12_node):
         return syn
 
     def get_cur_count(self):
-        """
-        @return: current count
-        @rtype: int
+        """    
+        :return: Current count
+        :rtype: int
         """
         raise DeprecationWarning('Moved to nodeCounter')
         return self._cur_count
@@ -1066,11 +1104,12 @@ class segment_if(x12_node):
         self._cur_count = ct
 
     def get_counts_list(self, ct_list):
-        """
-        Build a list of (path, ct) of the current node and parents
-        Gets the node counts to apply to another map
-        @param ct_list: List to append to
-        @type ct_list: list[(string, int)]
+        """    
+        Build a list of (path, ct) of the current node and parents.
+        Gets the node counts to apply to another map.
+
+        :param ct_list: List to append to
+        :type ct_list: list[(string, int)]
         """
         raise DeprecationWarning('Moved to nodeCounter')
         my_ct = (self.get_path(), self._cur_count)
